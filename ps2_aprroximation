@@ -1,0 +1,27 @@
+                    ##evaluates only polynomials passed as a tuple at the given value x
+                        ##*ex poly = (-13.39, 0.0, 17.5, 3.0, 1.0) = x4 + 3.0x3 + 17.5x2 - 13.39 
+def evaluate_poly(poly, x):
+    if(len(poly) == 1):
+        return poly[0]
+    else:
+        return poly[len(poly)-1]* x **(len(poly)-1) + evaluate_poly(poly[0: len(poly) -1],x)
+                    ##Computes the derivative of only polynomials that are passed as a tuple
+def compute_deriv(poly):
+    deriv = ()
+    for i in range(1,len(poly)):
+        deriv += (poly[i]*(i),)
+    return deriv
+                    ##compute_root approximates the root of only polynomials using newtons method
+def compute_root(poly, guess = 1):
+    if(-0.0001 <= evaluate_poly(poly, guess) <= 0.0001):
+        return guess
+    else:
+        return compute_root(poly, guess - evaluate_poly(poly, guess)/
+                            evaluate_poly(compute_deriv(poly),
+                                          guess))
+
+
+  
+poly = (-13.39, 0.0, 17.5, 3.0, 1.0)
+x = -13
+print(compute_root(poly))
